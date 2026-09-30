@@ -1,0 +1,34 @@
+# Maestro parity flow (iOS + Android). Mirrors e2e-web/parity.spec.ts.
+# Native screenshots use the device/simulator resolution (Maestro cannot force a viewport):
+# run on a 390x844-point device (iPhone 14/15 class) for side-by-side comparison with web.
+appId: dev.dateflow.example
+---
+- launchApp:
+    clearState: true
+- assertVisible: "September"
+- takeScreenshot: parity-01-initial
+- tapOn:
+    id: "calendar-next"
+- assertVisible: "October"
+- tapOn:
+    id: "calendar-day-2026-10-14"
+- takeScreenshot: parity-02-calendar-selected
+- tapOn:
+    id: "calendar-month-label"
+- takeScreenshot: parity-03-month-jumper
+- tapOn:
+    id: "calendar-jumper-month-2"
+- assertVisible: "March"
+- scrollUntilVisible:
+    element:
+      id: "date-picker-trigger"
+- tapOn:
+    id: "date-picker-trigger"
+- assertVisible:
+    id: "date-picker-sheet"
+- takeScreenshot: parity-04-sheet
+- tapOn:
+    id: "date-picker-backdrop"
+- tapOn:
+    id: "toggle-theme"
+- takeScreenshot: parity-05-dark

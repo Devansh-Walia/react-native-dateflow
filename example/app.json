@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "dateflow-example",
+    "slug": "dateflow-example",
+    "scheme": "dateflow",
+    "userInterfaceStyle": "automatic",
+    "ios": { "bundleIdentifier": "dev.dateflow.example" },
+    "android": { "package": "dev.dateflow.example", "edgeToEdgeEnabled": true },
+    "web": { "bundler": "metro", "output": "single" }
+  }
+}
