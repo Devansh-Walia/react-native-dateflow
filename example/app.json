@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "dateflow-example",
-    "slug": "dateflow-example",
-    "scheme": "dateflow",
+    "name": "react-native-dateflow-example",
+    "slug": "react-native-dateflow-example",
+    "scheme": "react-native-dateflow",
     "userInterfaceStyle": "automatic",
     "ios": { "bundleIdentifier": "dev.dateflow.example" },
     "android": { "package": "dev.dateflow.example", "edgeToEdgeEnabled": true },

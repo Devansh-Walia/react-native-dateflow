@@ -49,7 +49,7 @@ export default function App() {
       <ScrollView className="flex-1 bg-background" contentContainerClassName="gap-6 px-4 pb-16 pt-14">
         <View className="flex-row items-center justify-between">
           <Text style={TEXT_RESET} className="text-xl font-semibold text-foreground">
-            dateflow parity
+            react-native-dateflow parity
           </Text>
           <Pressable testID="toggle-theme" onPress={toggleColorScheme} className="select-none rounded-lg border border-border px-3 py-2">
             <Text style={TEXT_RESET} className="text-sm text-foreground">

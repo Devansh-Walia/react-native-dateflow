@@ -87,7 +87,7 @@ import { DatePickerThemeProvider } from 'react-native-dateflow';
 
 Light/dark mode follows NativeWind's `useColorScheme()`. Use `themeOverride="dark"` on the provider or on any single component to force a mode.
 
-Limitation: `themeOverride` (like `theme` and `useFallbackTokens`) makes the picker inject its own resolved token values on its root, so inside that subtree they replace your host CSS variables. With `themeOverride` alone you get the built-in palette for that mode, not your host's dark tokens; pair it with `theme` to supply your own colours. It only affects dateflow components and does not change NativeWind's global colour scheme.
+Limitation: `themeOverride` (like `theme` and `useFallbackTokens`) makes the picker inject its own resolved token values on its root, so inside that subtree they replace your host CSS variables. With `themeOverride` alone you get the built-in palette for that mode, not your host's dark tokens; pair it with `theme` to supply your own colours. It only affects react-native-dateflow components and does not change NativeWind's global colour scheme.
 
 ### Locale & time zone
 

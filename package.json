@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "description": "Pixel-consistent Calendar, TimePicker, DatePicker and DateTimePicker for React Native + Expo (iOS, Android, Web), styled with NativeWind v4.",
   "license": "MIT",
-  "author": "Devansh Walia <devanshwalia9898@gmail.com>",
+  "author": "Devansh Walia",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Devansh-Walia/dateflow.git"
+    "url": "git+https://github.com/Devansh-Walia/react-native-dateflow.git"
   },
-  "homepage": "https://github.com/Devansh-Walia/dateflow#readme",
+  "homepage": "https://github.com/Devansh-Walia/react-native-dateflow#readme",
   "bugs": {
-    "url": "https://github.com/Devansh-Walia/dateflow/issues"
+    "url": "https://github.com/Devansh-Walia/react-native-dateflow/issues"
   },
   "keywords": [
     "react-native",

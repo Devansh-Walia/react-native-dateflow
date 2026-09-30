@@ -8,7 +8,7 @@
 
 **Tech Stack:** Expo SDK 57, RN 0.86, React 19.2, Reanimated 4.5 + react-native-worklets 0.10, RNGH 2.32, NativeWind 4.2 + Tailwind 3.4, tailwind-merge 2, clsx, cva, date-fns 4 + @date-fns/tz, expo-haptics, jest-expo 57, RNTL 14, TypeScript 6, pnpm 11.
 
-**Spec:** `docs/superpowers/specs/2026-09-29-dateflow-design.md`
+**Spec:** `docs/superpowers/specs/2026-09-29-react-native-dateflow-design.md`
 
 ## Global Constraints
 
@@ -360,7 +360,7 @@ export {};
 
 Pixel-consistent date & time pickers for Expo (iOS, Android, Web), styled with NativeWind v4.
 
-Status: under construction. See `docs/superpowers/plans/2026-09-29-dateflow.md`.
+Status: under construction. See `docs/superpowers/plans/2026-09-29-react-native-dateflow.md`.
 ```
 
 - [ ] **Step 11: Write the smoke test** `src/__tests__/setup.test.tsx`
@@ -5616,7 +5616,7 @@ packages:
 
 ```json
 {
-  "name": "dateflow-example",
+  "name": "react-native-dateflow-example",
   "private": true,
   "version": "0.0.0",
   "main": "index.ts",
@@ -5655,7 +5655,7 @@ packages:
 }
 ```
 
-Version note: after `pnpm install`, run `pnpm --filter dateflow-example exec expo install --check`. If Expo reports a different patch for `expo-status-bar` or any other package, use the version it prints. Don't guess.
+Version note: after `pnpm install`, run `pnpm --filter react-native-dateflow-example exec expo install --check`. If Expo reports a different patch for `expo-status-bar` or any other package, use the version it prints. Don't guess.
 
 - [ ] **Step 3: Create `example/app.json`, `example/index.ts`, `example/babel.config.js`, `example/nativewind-env.d.ts`, `example/tsconfig.json`**
 
@@ -5663,9 +5663,9 @@ Version note: after `pnpm install`, run `pnpm --filter dateflow-example exec exp
 ```json
 {
   "expo": {
-    "name": "dateflow-example",
-    "slug": "dateflow-example",
-    "scheme": "dateflow",
+    "name": "react-native-dateflow-example",
+    "slug": "react-native-dateflow-example",
+    "scheme": "react-native-dateflow",
     "userInterfaceStyle": "automatic",
     "ios": { "bundleIdentifier": "dev.dateflow.example" },
     "android": { "package": "dev.dateflow.example", "edgeToEdgeEnabled": true },
@@ -5815,7 +5815,7 @@ export default function App() {
       {/* ScrollView only holds the demo page; the library itself never uses one. */}
       <ScrollView className="flex-1 bg-background" contentContainerClassName="gap-6 px-4 pb-16 pt-14">
         <View className="flex-row items-center justify-between">
-          <Text className="text-xl font-semibold text-foreground">dateflow parity</Text>
+          <Text className="text-xl font-semibold text-foreground">react-native-dateflow parity</Text>
           <Pressable testID="toggle-theme" onPress={toggleColorScheme} className="rounded-lg border border-border px-3 py-2">
             <Text className="text-sm text-foreground">{colorScheme === 'dark' ? 'Light' : 'Dark'}</Text>
           </Pressable>
@@ -5960,22 +5960,22 @@ example/playwright-report/
 
 - [ ] **Step 8: Install and verify the example compiles for every platform**
 
-Run: `pnpm install && pnpm --filter dateflow-example exec expo install --check`
+Run: `pnpm install && pnpm --filter react-native-dateflow-example exec expo install --check`
 Expected: no dependency mismatches. If it reports any, apply the versions it suggests.
 
-Run: `pnpm --filter dateflow-example typecheck`
+Run: `pnpm --filter react-native-dateflow-example typecheck`
 Expected: exit 0.
 
-Run: `pnpm --filter dateflow-example export:web`
+Run: `pnpm --filter react-native-dateflow-example export:web`
 Expected: the web bundle builds into `example/dist/` with no "Unable to resolve" errors (this proves the Metro link and NativeWind setup).
 
 - [ ] **Step 9: Run the parity harness (manual, needs a simulator/emulator + Maestro CLI + Playwright browsers)**
 
-1. Web: `pnpm --filter dateflow-example exec playwright install chromium`, then `pnpm --filter dateflow-example e2e:web`.
+1. Web: `pnpm --filter react-native-dateflow-example exec playwright install chromium`, then `pnpm --filter react-native-dateflow-example e2e:web`.
    Expected: 2 passed, and PNGs in `example/screenshots/`.
-2. iOS: `pnpm --filter dateflow-example ios` (the dev build), then `pnpm --filter dateflow-example e2e:native`.
+2. iOS: `pnpm --filter react-native-dateflow-example ios` (the dev build), then `pnpm --filter react-native-dateflow-example e2e:native`.
    Expected: the flow passes, and screenshots are written to the working directory.
-3. Android: `pnpm --filter dateflow-example android`, then `pnpm --filter dateflow-example e2e:native`.
+3. Android: `pnpm --filter react-native-dateflow-example android`, then `pnpm --filter react-native-dateflow-example e2e:native`.
    Expected: the same.
 4. Compare `parity-0N-*` across the three platforms side by side. Any difference in layout, spacing, colour or radius is a bug; fix it in the library, not the example. Font rasterisation differences are expected until a custom font is loaded (README "Pixel parity checklist").
 
@@ -5983,7 +5983,7 @@ No containers are needed. If any tooling ever needs one, use podman, never docke
 
 - [ ] **Step 10: Final verification + checkpoint (no commit)**
 
-Run: `pnpm verify && pnpm --filter dateflow-example typecheck`
+Run: `pnpm verify && pnpm --filter react-native-dateflow-example typecheck`
 Expected: all green.
 Run: `git status --short`
 Expected: only untracked or modified project files. Do **not** commit.
