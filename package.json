@@ -24,23 +24,21 @@
     "android",
     "web"
   ],
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "react-native": "./src/index.ts",
-  "source": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "react-native": "./dist/index.js",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "react-native": "./src/index.ts",
-      "default": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "react-native": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./tailwind-preset": "./tailwind.preset.js",
     "./theme.css": "./theme.css",
     "./package.json": "./package.json"
   },
   "files": [
-    "src",
-    "!src/**/__tests__",
+    "dist",
     "tailwind.preset.js",
     "theme.css",
     "LICENSE"
@@ -55,8 +53,9 @@
     "test:ios": "jest --selectProjects ios",
     "test:android": "jest --selectProjects android",
     "test:web": "jest --selectProjects web",
+    "build": "tsc -p tsconfig.build.json",
     "verify": "pnpm typecheck && pnpm test",
-    "prepublishOnly": "pnpm verify"
+    "prepublishOnly": "pnpm verify && pnpm build"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

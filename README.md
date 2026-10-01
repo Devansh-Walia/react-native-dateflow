@@ -11,7 +11,28 @@ pnpm add react-native-dateflow date-fns @date-fns/tz
 pnpm expo install react-native-reanimated react-native-worklets react-native-gesture-handler expo-haptics nativewind tailwindcss
 ```
 
-The package ships TypeScript source, and your Metro/Babel config compiles it. Expo/Metro is the only supported bundler.
+The package ships compiled JavaScript + type declarations (built from `src/` with `pnpm build`). Expo/Metro is the only supported bundler.
+
+## Local development (consume from another repo)
+
+Until you publish to npm, install it straight from a checkout on disk. First build it:
+
+```sh
+# in the react-native-dateflow checkout
+pnpm build
+```
+
+Then, from your app repo:
+
+```sh
+# live symlink — rebuild (`pnpm build`) and reload to pick up edits
+pnpm add react-native-dateflow@link:../dateflow
+
+# or a snapshot copy of the current build
+pnpm add react-native-dateflow@file:../dateflow
+```
+
+No Metro `watchFolders`/symlink config is needed — the package ships plain JS. Just follow the normal [Setup](#setup) steps (Tailwind `content` + preset, gesture root, theme tokens).
 
 ## Setup
 
@@ -21,7 +42,7 @@ The package ships TypeScript source, and your Metro/Babel config compiles it. Ex
    // tailwind.config.js
    module.exports = {
      darkMode: 'class',
-     content: ['./app/**/*.{ts,tsx}', './node_modules/react-native-dateflow/src/**/*.{ts,tsx}'],
+     content: ['./app/**/*.{ts,tsx}', './node_modules/react-native-dateflow/dist/**/*.{js,jsx}'],
      presets: [require('nativewind/preset'), require('react-native-dateflow/tailwind-preset')],
    };
    ```
