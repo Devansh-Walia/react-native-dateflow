@@ -3,16 +3,18 @@
  * 3 pages wide and moved with a custom pan (no platform pager, so it behaves the same everywhere).
  */
 import { addMonths } from 'date-fns';
-import { useLayoutEffect, useMemo, useState, type ReactNode } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { View, type LayoutChangeEvent } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 import { resolveSwipe } from '../../core/navigation';
+import { useWebWheel } from '../../platform/useWebWheel';
 
 const PAGE_DURATION_MS = 220;
 const RUBBER_BAND = 0.2;
 const SNAP_BACK = { damping: 22, stiffness: 240, mass: 1 } as const;
+const WEB_WHEEL_STEP_PX = 40;
 
 export interface SwipeableMonthsProps {
   month: Date;
@@ -35,6 +37,22 @@ export function SwipeableMonths({ month, canPrev, canNext, enabled, onNavigate, 
   }, [monthTime, translateX]);
 
   const onLayout = (event: LayoutChangeEvent) => setWidth(event.nativeEvent.layout.width);
+
+  // Trackpad / mouse-wheel month navigation on web (touch pan is handled by the
+  // gesture below). Accumulate deltaY so a single flick maps to one month.
+  const containerRef = useRef<View>(null);
+  const wheelAccumulator = useRef(0);
+  useWebWheel(containerRef, (deltaY) => {
+    if (!enabled) return;
+    wheelAccumulator.current += deltaY;
+    const steps = Math.trunc(wheelAccumulator.current / WEB_WHEEL_STEP_PX);
+    if (steps === 0) return;
+    wheelAccumulator.current -= steps * WEB_WHEEL_STEP_PX;
+    const direction = steps > 0 ? 1 : -1;
+    if (direction === 1 && !canNext) return;
+    if (direction === -1 && !canPrev) return;
+    onNavigate(direction);
+  });
 
   const gesture = useMemo(
     () =>
@@ -61,27 +79,23 @@ export function SwipeableMonths({ month, canPrev, canNext, enabled, onNavigate, 
 
   const rowStyle = useAnimatedStyle(() => ({ transform: [{ translateX: translateX.value - width }] }));
 
-  if (width === 0) {
-    return (
-      <View onLayout={onLayout} testID={testID}>
-        {renderMonth(month, true)}
-      </View>
-    );
-  }
-
   return (
-    <View onLayout={onLayout} className="overflow-hidden" testID={testID}>
-      <GestureDetector gesture={gesture}>
-        <Animated.View style={[{ flexDirection: 'row', width: width * 3 }, rowStyle]}>
-          <View style={{ width }} aria-hidden>
-            {renderMonth(addMonths(month, -1), false)}
-          </View>
-          <View style={{ width }}>{renderMonth(month, true)}</View>
-          <View style={{ width }} aria-hidden>
-            {renderMonth(addMonths(month, 1), false)}
-          </View>
-        </Animated.View>
-      </GestureDetector>
+    <View ref={containerRef} onLayout={onLayout} className="overflow-hidden" testID={testID}>
+      {width === 0 ? (
+        renderMonth(month, true)
+      ) : (
+        <GestureDetector gesture={gesture}>
+          <Animated.View style={[{ flexDirection: 'row', width: width * 3 }, rowStyle]}>
+            <View style={{ width }} aria-hidden>
+              {renderMonth(addMonths(month, -1), false)}
+            </View>
+            <View style={{ width }}>{renderMonth(month, true)}</View>
+            <View style={{ width }} aria-hidden>
+              {renderMonth(addMonths(month, 1), false)}
+            </View>
+          </Animated.View>
+        </GestureDetector>
+      )}
     </View>
   );
 }
